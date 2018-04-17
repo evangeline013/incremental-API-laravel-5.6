@@ -7,7 +7,7 @@ use App\Lesson;
 use App\Http\Resources\LessonResource;
 use App\Http\Resources\LessonCollection;
 
-class LessonsController extends Controller
+class LessonsController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +17,7 @@ class LessonsController extends Controller
     public function index()
     {
         $lessons = new LessonCollection(Lesson::all());
-        return response()->json($lessons, 200);
+        return $lessons;
     }
 
     /**
@@ -49,17 +49,13 @@ class LessonsController extends Controller
      */
     public function show($id)
     {
-        $lesson = new LessonResource(Lesson::find($id));
+        $lesson = Lesson::find($id);
 
         if (! $lesson) {
-            return response()->json([
-                'error' => [
-                    'message' =>'LessonResource does not exist'
-                ]
-            ], 404);
+            return $this->respondNotFound('Lesson does not exist.');
         }
 
-        return response()->json($lesson, 200);
+        return new LessonResource($lesson);
     }
 
     /**
