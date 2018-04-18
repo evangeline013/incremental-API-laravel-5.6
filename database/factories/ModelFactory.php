@@ -29,3 +29,10 @@ $factory->define(App\Lesson::class, function (Faker $faker) {
         'some_bool' => $faker->boolean(),
     ];
 });
+
+$factory->define(App\Tag::class, function (Faker $faker) {
+    return [
+        'name' => $faker->unique()->word
+    ];
+});
+
