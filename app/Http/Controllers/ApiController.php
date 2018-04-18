@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Http\Response;
 
 class ApiController extends Controller
 {
@@ -33,9 +34,26 @@ class ApiController extends Controller
         return $this->setStatusCode(500)->respondWithError($message);
     }
 
+    public function respondValidationError($message = 'Validation Error!')
+    {
+        return $this->setStatusCode(422)->respondWithError($message);
+    }
+
+    public function respond($data, $headers=[])
+    {
+        return response()->json($data, $this->getStatusCode(), $headers);
+    }
+
+    public function respondCreated($message)
+    {
+        return $this->setStatusCode(201)->respond([
+            'message' => $message
+        ]);
+    }
+
     public function respondWithError($message)
     {
-        return response()->json([
+        return $this->respond([
             'error' => [
                 'message' => $message,
                 'status_code' => $this->getStatusCode()

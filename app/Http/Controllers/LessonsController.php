@@ -9,6 +9,11 @@ use App\Http\Resources\LessonCollection;
 
 class LessonsController extends ApiController
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api')->only('store');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -38,7 +43,18 @@ class LessonsController extends ApiController
      */
     public function store(Request $request)
     {
-        //
+        if (! $request->input('title') or ! $request->input('body') or ! $request->input('active'))
+        {
+            return $this->respondValidationError('Parameters failed validation for a lesson.');
+        }
+
+        Lesson::create([
+            'title' => request('title'),
+            'body' => request('body'),
+            'some_bool' => request('active')
+        ]);
+
+        return $this->respondCreated('Lesson was successfully created!');
     }
 
     /**
@@ -91,4 +107,6 @@ class LessonsController extends ApiController
     {
         //
     }
+
+
 }
