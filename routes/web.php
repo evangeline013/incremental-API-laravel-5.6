@@ -21,6 +21,8 @@ Route::get('/settings', 'SettingsController@index');
 
 Route::prefix('api/v1')->group(function(){
     Route::resource('lessons', 'LessonsController');
+    Route::resource('tags', 'TagsController')->only(['index', 'show']);
+    Route::get('/lessons/{id}/tags', 'TagsController@index');
 });
 
 

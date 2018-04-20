@@ -54,7 +54,7 @@ class LessonsController extends ApiController
             'some_bool' => request('active')
         ]);
 
-        return $this->respondCreated('Lesson was successfully created!');
+        return $this->respondCreated('LessonResource was successfully created!');
     }
 
     /**
@@ -68,7 +68,7 @@ class LessonsController extends ApiController
         $lesson = Lesson::find($id);
 
         if (! $lesson) {
-            return $this->respondNotFound('Lesson does not exist.');
+            return $this->respondNotFound('LessonResource does not exist.');
         }
 
         return new LessonResource($lesson);
