@@ -43,7 +43,7 @@ class LessonsController extends ApiController
      */
     public function store(Request $request)
     {
-        if (! $request->input('title') or ! $request->input('body') or ! $request->input('active'))
+        if (! $request->input('title') or ! $request->input('body') or $request->input('active') === null)
         {
             return $this->respondValidationError('Parameters failed validation for a lesson.');
         }
@@ -54,7 +54,7 @@ class LessonsController extends ApiController
             'some_bool' => request('active')
         ]);
 
-        return $this->respondCreated('LessonResource was successfully created!');
+        return $this->respondCreated('Lesson was successfully created!');
     }
 
     /**
@@ -68,7 +68,7 @@ class LessonsController extends ApiController
         $lesson = Lesson::find($id);
 
         if (! $lesson) {
-            return $this->respondNotFound('LessonResource does not exist.');
+            return $this->respondNotFound('Lesson does not exist.');
         }
 
         return new LessonResource($lesson);
