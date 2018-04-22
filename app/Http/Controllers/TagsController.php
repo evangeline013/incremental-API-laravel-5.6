@@ -15,6 +15,12 @@ class TagsController extends ApiController
         return TagResource::collection($tags);
     }
 
+    public function show(Tag $tag)
+    {
+        $tag->load('lessons');
+        return new TagResource($tag);
+    }
+
     private function getTags($lessonId)
     {
         return $lessonId ? Lesson::findOrFail($lessonId)->tags : Tag::all();

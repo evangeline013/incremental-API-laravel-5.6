@@ -19,9 +19,10 @@ class LessonsController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $lessons = new LessonCollection(Lesson::all());
+        $limit = $request->input('limit') ? : 5;
+        $lessons = new LessonCollection(Lesson::paginate($limit));
         return $lessons;
     }
 

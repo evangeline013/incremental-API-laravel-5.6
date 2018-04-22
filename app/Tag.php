@@ -10,4 +10,9 @@ class Tag extends Model
     {
         return $this->belongsToMany('App\Lesson');
     }
+
+    public function getRouteKeyName()
+    {
+        return 'name';
+    }
 }

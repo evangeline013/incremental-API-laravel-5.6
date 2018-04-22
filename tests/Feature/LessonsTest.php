@@ -50,4 +50,12 @@ class LessonsTest extends TestCase
 
         $this->assertDatabaseHas('lessons', $lesson->toArray());
     }
+
+    /** @test */
+    public function it_returns_422_if_a_post_lesson_request_fails_parameter_validation()
+    {
+        Passport::actingAs(factory('App\User')->create());
+        $this->post('/api/v1/lessons')
+            ->assertStatus(422);
+    }
 }
