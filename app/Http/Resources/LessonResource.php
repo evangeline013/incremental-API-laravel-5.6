@@ -17,6 +17,9 @@ class LessonResource extends JsonResource
         return [
             'title' => $this->title,
             'body' => $this->body,
+            'views' => $this->views,
+            'length' => $this->length,
+            'difficulty' => $this->difficulty,
             'active' => boolval($this->some_bool)
         ];
     }

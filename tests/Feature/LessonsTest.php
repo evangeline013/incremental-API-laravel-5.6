@@ -45,6 +45,9 @@ class LessonsTest extends TestCase
         $this->post('/api/v1/lessons', [
             'title' => $lesson->title,
             'body' => $lesson->body,
+            'views' => $lesson->views,
+            'length' => $lesson->length,
+            'difficulty' => $lesson->difficulty,
             'active' => $lesson->some_bool
         ])->assertStatus(201);
 

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Lesson;
 use App\Http\Resources\LessonResource;
 use App\Http\Resources\LessonCollection;
+use App\LessonFilters;
 
 class LessonsController extends ApiController
 {
@@ -19,11 +20,13 @@ class LessonsController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request, LessonFilters $filters)
     {
         $limit = $request->input('limit') ? : 5;
-        $lessons = new LessonCollection(Lesson::paginate($limit));
-        return $lessons;
+
+        $lesson = Lesson::filter($filters);
+
+        return new LessonCollection($lesson->paginate($limit));
     }
 
     /**
@@ -52,6 +55,9 @@ class LessonsController extends ApiController
         Lesson::create([
             'title' => request('title'),
             'body' => request('body'),
+            'views' => request('views'),
+            'length' => request('length'),
+            'difficulty' => request('difficulty'),
             'some_bool' => request('active')
         ]);
 

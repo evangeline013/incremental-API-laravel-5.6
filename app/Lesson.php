@@ -12,4 +12,9 @@ class Lesson extends Model
     {
         return $this->belongsToMany('App\Tag');
     }
+
+    public function scopeFilter($query, $filters)
+    {
+        return $filters->apply($query);
+    }
 }
